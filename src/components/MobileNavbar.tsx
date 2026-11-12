@@ -72,7 +72,7 @@ export const MobileNavbar: React.FC<MobileNavbarProps> = ({
         paddingRight: 'max(8px, env(safe-area-inset-right, 6px))',
         zIndex: 60,
       }}
-      className="xl:hidden flex w-[calc(100%-16px)] sm:w-[calc(100%-28px)] max-w-lg sm:max-w-xl md:max-w-2xl bg-white/98 dark:bg-slate-900/98 rounded-2xl px-1.5 sm:px-2.5 pt-1 items-center justify-around shadow-[0_4px_20px_rgba(15,23,42,0.12)] dark:shadow-[0_8px_28px_rgba(0,0,0,0.75)] border border-slate-200 dark:border-slate-800 pointer-events-auto select-none"
+      className="xl:hidden flex w-[calc(100%-16px)] sm:w-[calc(100%-28px)] max-w-lg sm:max-w-xl md:max-w-2xl bg-white/92 dark:bg-[#0d1422]/92 backdrop-blur-xl rounded-[22px] px-1.5 sm:px-2.5 pt-1 items-center justify-around shadow-[0_16px_40px_-16px_rgba(15,23,42,0.45)] dark:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.75)] border border-white/80 dark:border-white/10 pointer-events-auto select-none"
     >
       {tabs.map((tab) => {
         const Icon = tab.icon;
@@ -95,12 +95,12 @@ export const MobileNavbar: React.FC<MobileNavbarProps> = ({
               )}
               <motion.div
                 whileTap={{ scale: 0.92 }}
-                className={`w-12 h-12 sm:w-13 sm:h-13 rounded-xl flex items-center justify-center shadow-md transition-colors duration-150 relative border ${
+                className={`w-12 h-12 sm:w-[52px] sm:h-[52px] rounded-2xl flex items-center justify-center shadow-lg transition-colors duration-150 relative border ${
                   isLiveActive
                     ? 'bg-red-600 text-white border-red-400 ring-2 ring-red-500/30'
                     : isActive
-                    ? 'bg-blue-600 text-white border-blue-400 ring-2 ring-blue-500/25'
-                    : 'bg-slate-900 dark:bg-blue-600 text-white border-slate-700 dark:border-blue-400'
+                    ? 'bg-gradient-to-br from-blue-600 to-sky-400 text-white border-transparent ring-2 ring-orange-400/80'
+                    : 'bg-slate-950 dark:bg-gradient-to-br dark:from-blue-600 dark:to-sky-500 text-white border-slate-800 dark:border-transparent ring-2 ring-orange-400/50'
                 }`}
               >
                 <Icon className="w-5.5 h-5.5 relative z-10" />
@@ -125,9 +125,9 @@ export const MobileNavbar: React.FC<MobileNavbarProps> = ({
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 flex flex-col items-center justify-center py-1 px-0.5 rounded-xl relative transition-colors duration-150 cursor-pointer min-h-[44px] sm:min-h-[48px] active:scale-95 ${
+            className={`flex-1 flex flex-col items-center justify-center py-1.5 px-0.5 rounded-2xl relative transition-colors duration-150 cursor-pointer min-h-[48px] active:scale-95 ${
               isActive
-                ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/80 dark:bg-blue-950/40'
+                ? 'text-blue-700 dark:text-blue-300 font-bold bg-blue-50 dark:bg-blue-500/15'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
             aria-label={tab.label}

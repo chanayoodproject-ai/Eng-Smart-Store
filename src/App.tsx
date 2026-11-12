@@ -495,7 +495,8 @@ export default function App() {
       if (inventoryData.length === 0) {
         try {
           const res = await fetch(`/api/inventory`);
-          if (res.ok) {
+          const contentType = res.headers.get('content-type') || '';
+          if (res.ok && contentType.includes('application/json')) {
             const data = await res.json();
             inventoryData = applyInventoryOverrides(data.items || []);
           }
@@ -2532,34 +2533,35 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen min-h-[100dvh] bg-slate-100 dark:bg-slate-950 flex justify-center pl-safe pr-safe selection:bg-blue-600 selection:text-white relative overflow-x-hidden w-full max-w-full transition-colors duration-200">
+    <div className="eng-canvas min-h-screen min-h-[100dvh] flex justify-center pl-safe pr-safe selection:bg-blue-600 selection:text-white relative overflow-x-hidden w-full max-w-full">
       {/* Global sleek loading progress bar */}
       <GlobalProgressBar isLoading={refreshing || loading} triggerKey={activeTab} />
 
       {/* Industrial Command Pro Responsive Shell */}
       <div 
-        className={`w-full max-w-full min-w-0 lg:max-w-7xl xl:max-w-[1440px] 2xl:max-w-[1600px] bg-[#F8FAFC] dark:bg-[#090D16] flex flex-col relative font-sans md:border-x border-slate-200 dark:border-slate-800/90 overflow-x-hidden ${
+        className={`eng-shell w-full max-w-full min-w-0 lg:max-w-7xl xl:max-w-[1440px] 2xl:max-w-[1600px] flex flex-col relative font-sans md:border-x md:border-slate-200/70 md:dark:border-white/10 md:shadow-[0_30px_80px_-36px_rgba(15,23,42,0.45)] overflow-x-hidden ${
           activeTab === 'voice' 
             ? 'h-[100dvh] max-h-[100dvh] overflow-hidden' 
             : 'min-h-screen min-h-[100dvh]'
         }`}
       >
         {/* Top Industrial Command Header */}
-        <header className="bg-white dark:bg-slate-900 sticky top-0 z-30 px-3 sm:px-5 md:px-6 pt-safe-header pb-2.5 border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
+        <header className="eng-header sticky top-0 z-30 px-3 sm:px-5 md:px-6 pt-safe-header pb-2.5">
           <div className="max-w-7xl mx-auto w-full">
-            <div className="flex items-center justify-between gap-2 sm:gap-3">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               {/* Brand Logo & User Identity (Left) */}
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-950 shrink-0 shadow-2xs">
+                <div className="w-10 h-10 rounded-xl overflow-hidden bg-slate-950 shrink-0 shadow-md ring-2 ring-orange-400/70 ring-offset-2 ring-offset-white dark:ring-offset-[#0c1220]">
                   <EngLogo className="w-full h-full object-cover" />
                 </div>
                 <div className="flex flex-col min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[11px] font-mono font-extrabold tracking-wider text-blue-600 dark:text-blue-400 uppercase hidden sm:inline">
-                      ENG SMART STORE
+                    <span className="text-[13px] sm:text-sm font-black tracking-tight text-slate-950 dark:text-white leading-none">
+                      <span className="sm:hidden">ENG</span>
+                      <span className="hidden sm:inline">ENG Smart Store</span>
                     </span>
                     <span
-                      className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded border uppercase tracking-tight ${
+                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full border uppercase tracking-wide ${
                         currentUser.role === 'admin'
                           ? 'bg-orange-50 dark:bg-orange-950/60 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-800/70'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
@@ -2568,9 +2570,9 @@ export default function App() {
                       {currentUser.role === 'admin' ? 'ADMIN' : 'STAFF'}
                     </span>
                   </div>
-                  <div className="flex items-center gap-1 min-w-0" title={currentUser.name}>
+                  <div className="flex items-center gap-1 min-w-0 mt-0.5" title={currentUser.name}>
                     <UserIcon className="w-3 h-3 text-slate-400 dark:text-slate-500 shrink-0" />
-                    <span className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate max-w-[115px] sm:max-w-[180px]">
+                    <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 truncate max-w-[115px] sm:max-w-[180px]">
                       {currentUser.name || currentUser.username}
                     </span>
                   </div>
@@ -2590,7 +2592,7 @@ export default function App() {
               />
 
               {/* Header Command Actions (Right) */}
-              <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+              <div className="flex w-full flex-wrap items-center justify-end gap-1 sm:ml-auto sm:w-auto sm:gap-1.5">
                 {/* Light/Dark Theme Switcher */}
                 <ThemeToggle />
 
@@ -2601,8 +2603,9 @@ export default function App() {
                 <button
                   onClick={() => fetchInventory(true)}
                   disabled={refreshing}
-                  className="h-9 w-9 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200/70 dark:hover:bg-slate-700 active:scale-95 transition-colors flex items-center justify-center cursor-pointer"
+                  className="eng-icon-btn"
                   title="ซิงค์ข้อมูลล่าสุด"
+                  aria-label="ซิงค์ข้อมูลล่าสุด"
                 >
                   <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin text-blue-600 dark:text-blue-400' : ''}`} />
                 </button>
@@ -2614,8 +2617,9 @@ export default function App() {
                       setLineSettingsInitialTab('line');
                       setIsLineSettingsModalOpen(true);
                     }}
-                    className="h-9 w-9 rounded-lg text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800/70 active:scale-95 transition-colors flex items-center justify-center cursor-pointer"
+                    className="eng-icon-btn !text-blue-600 dark:!text-blue-400 !bg-blue-50 dark:!bg-blue-950/50 !border-blue-200 dark:!border-blue-800/70"
                     title="การแจ้งเตือน (Web Push & LINE)"
+                    aria-label="การแจ้งเตือน"
                   >
                     <Bell className="w-4 h-4" />
                   </button>
@@ -2625,7 +2629,7 @@ export default function App() {
                 {currentUser.role === 'admin' && (
                   <button
                     onClick={handleOpenAddItemModal}
-                    className="h-9 px-2.5 sm:px-3 rounded-lg bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white active:scale-95 transition-colors text-xs font-bold flex items-center gap-1 border border-slate-800 dark:border-slate-700 cursor-pointer"
+                    className="h-10 px-2.5 sm:px-3 rounded-xl bg-slate-950 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 dark:text-slate-950 text-white active:scale-[0.98] transition-colors text-xs font-bold flex items-center gap-1 cursor-pointer shadow-sm"
                     title="เพิ่มสินค้าใหม่ (Admin)"
                   >
                     <Plus className="w-4 h-4" />
@@ -2640,7 +2644,7 @@ export default function App() {
                       setIsRequisitionMenuOpen(false);
                       handleOpenRequisitionModal();
                     }}
-                    className="h-9 px-2.5 sm:px-3 rounded-l-lg bg-blue-600 hover:bg-blue-700 text-white active:scale-95 transition-colors text-xs font-bold flex items-center gap-1.5 border border-blue-600 cursor-pointer"
+                    className="h-10 px-3 sm:px-3.5 rounded-l-xl bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-500 hover:to-sky-400 text-white active:scale-[0.98] transition-all text-xs font-bold flex items-center gap-1.5 shadow-md shadow-blue-600/25 cursor-pointer"
                     title="บันทึกการเบิกของ / รับเข้าสต๊อก"
                   >
                     <ClipboardList className="w-3.5 h-3.5" />
@@ -2650,7 +2654,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => setIsRequisitionMenuOpen((prev) => !prev)}
-                    className="h-9 px-1.5 rounded-r-lg bg-blue-700 hover:bg-blue-800 text-white active:scale-95 transition-colors border-y border-r border-blue-700 border-l border-l-blue-500 cursor-pointer flex items-center justify-center"
+                    className="h-10 px-2 rounded-r-xl bg-blue-700 hover:bg-blue-800 text-white active:scale-[0.98] transition-colors border-l border-l-white/25 cursor-pointer flex items-center justify-center"
                     title="ตัวเลือกโหมดเบิกของ (เบิก 1 ชิ้น หรือ เลือกหลายชิ้น)"
                   >
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isRequisitionMenuOpen ? 'rotate-180' : ''}`} />
@@ -2665,7 +2669,7 @@ export default function App() {
                         exit={{ opacity: 0, scale: 0.95, y: -4 }}
                         transition={{ duration: 0.15 }}
                         style={{ transformOrigin: 'top right' }}
-                        className="absolute right-0 top-full mt-1.5 w-60 rounded-xl bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-800 p-1.5 z-50 overflow-hidden"
+                        className="absolute right-0 top-full mt-2 w-64 rounded-2xl bg-white dark:bg-[#101826] shadow-2xl border border-slate-200/80 dark:border-white/10 p-1.5 z-50 overflow-hidden"
                       >
                         <button
                           type="button"
@@ -2710,7 +2714,7 @@ export default function App() {
                 {/* Logout Button */}
                 <button
                   onClick={() => setShowLogoutConfirm(true)}
-                  className="h-9 w-9 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 hover:border-red-200 dark:hover:border-red-800/60 active:scale-95 transition-colors flex items-center justify-center cursor-pointer"
+                  className="eng-icon-btn hover:!text-red-600 dark:hover:!text-red-400 hover:!bg-red-50 dark:hover:!bg-red-950/40 hover:!border-red-200"
                   title="ออกจากระบบ"
                 >
                   <LogOut className="w-4 h-4" />
@@ -2732,26 +2736,23 @@ export default function App() {
               className="flex-1 flex flex-col pb-28 sm:pb-32 w-full min-w-0 overflow-x-hidden"
             >
               {/* Industrial Command Pro Search, Bento KPI Strip & Filter Bar */}
-              <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 sm:px-5 md:px-6 py-3 w-full min-w-0">
+              <div className="px-3 sm:px-5 md:px-6 py-3.5 w-full min-w-0">
                 <div className="max-w-7xl mx-auto w-full min-w-0 space-y-2.5">
                   {/* Bento KPI Command Strip (Click to filter directly) */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     <button
                       type="button"
                       onClick={() => setStatusFilter('all')}
-                      className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
-                        statusFilter === 'all'
-                          ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-600 dark:border-blue-500 ring-1 ring-blue-500/20'
-                          : 'bg-slate-50/80 dark:bg-slate-800/50 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-                      }`}
+                      className={`kpi-tile ${statusFilter === 'all' ? 'kpi-tile-active' : ''}`}
+                      style={{ '--kpi': '#2563eb' } as React.CSSProperties}
                     >
                       <div>
                         <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">รายการอะไหล่ทั้งหมด</div>
-                        <div className="font-mono font-black text-lg sm:text-xl text-slate-900 dark:text-white tabular-nums leading-tight mt-0.5">
+                        <div className="font-mono font-black text-xl sm:text-2xl text-slate-950 dark:text-white tabular-nums leading-none mt-1">
                           {items.length.toLocaleString()}
                         </div>
                       </div>
-                      <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
                         <Package className="w-4 h-4" />
                       </div>
                     </button>
@@ -2759,15 +2760,16 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setStatusFilter('all')}
-                      className="p-2.5 rounded-xl border bg-slate-50/80 dark:bg-slate-800/50 border-slate-200 dark:border-slate-800 hover:border-emerald-400 dark:hover:border-emerald-700 text-left transition-all cursor-pointer flex items-center justify-between"
+                      className="kpi-tile"
+                      style={{ '--kpi': '#059669' } as React.CSSProperties}
                     >
                       <div>
                         <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">พร้อมเบิกใช้งาน</div>
-                        <div className="font-mono font-black text-lg sm:text-xl text-emerald-600 dark:text-emerald-400 tabular-nums leading-tight mt-0.5">
+                        <div className="font-mono font-black text-xl sm:text-2xl text-emerald-600 dark:text-emerald-400 tabular-nums leading-none mt-1">
                           {normalStockCount.toLocaleString()}
                         </div>
                       </div>
-                      <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
                         <CheckCircle2 className="w-4 h-4" />
                       </div>
                     </button>
@@ -2775,19 +2777,16 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setStatusFilter(statusFilter === 'low' ? 'all' : 'low')}
-                      className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
-                        statusFilter === 'low'
-                          ? 'bg-amber-50 dark:bg-amber-950/50 border-amber-500 ring-1 ring-amber-500/25'
-                          : 'bg-slate-50/80 dark:bg-slate-800/50 border-slate-200 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-700'
-                      }`}
+                      className={`kpi-tile ${statusFilter === 'low' ? 'kpi-tile-active' : ''}`}
+                      style={{ '--kpi': '#d97706' } as React.CSSProperties}
                     >
                       <div>
                         <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">สต๊อกใกล้หมด</div>
-                        <div className="font-mono font-black text-lg sm:text-xl text-amber-600 dark:text-amber-400 tabular-nums leading-tight mt-0.5">
+                        <div className="font-mono font-black text-xl sm:text-2xl text-amber-600 dark:text-amber-400 tabular-nums leading-none mt-1">
                           {(summary?.lowStockCount || 0).toLocaleString()}
                         </div>
                       </div>
-                      <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
                         <AlertTriangle className="w-4 h-4" />
                       </div>
                     </button>
@@ -2795,19 +2794,16 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setStatusFilter(statusFilter === 'out' ? 'all' : 'out')}
-                      className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
-                        statusFilter === 'out'
-                          ? 'bg-red-50 dark:bg-red-950/50 border-red-500 ring-1 ring-red-500/25'
-                          : 'bg-slate-50/80 dark:bg-slate-800/50 border-slate-200 dark:border-slate-800 hover:border-red-400 dark:hover:border-red-700'
-                      }`}
+                      className={`kpi-tile ${statusFilter === 'out' ? 'kpi-tile-active' : ''}`}
+                      style={{ '--kpi': '#dc2626' } as React.CSSProperties}
                     >
                       <div>
                         <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">สินค้าหมดสต๊อก</div>
-                        <div className="font-mono font-black text-lg sm:text-xl text-red-600 dark:text-red-400 tabular-nums leading-tight mt-0.5">
+                        <div className="font-mono font-black text-xl sm:text-2xl text-red-600 dark:text-red-400 tabular-nums leading-none mt-1">
                           {(summary?.outOfStockCount || 0).toLocaleString()}
                         </div>
                       </div>
-                      <div className="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-xl bg-red-50 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center shrink-0">
                         <XCircle className="w-4 h-4" />
                       </div>
                     </button>
@@ -2822,7 +2818,7 @@ export default function App() {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="ค้นหาชื่ออะไหล่, รหัสสินค้า (#A000...), หมวดหมู่, สถานที่จัดเก็บ..."
-                        className="w-full h-10 bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 rounded-lg pl-9 pr-9 text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 transition-all"
+                        className="eng-search pl-10 pr-10 text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500"
                       />
                       {searchQuery && (
                         <button
@@ -2839,10 +2835,10 @@ export default function App() {
                       <button
                         type="button"
                         onClick={() => setStatusFilter(statusFilter === 'favorites' ? 'all' : 'favorites')}
-                        className={`h-9 px-3 rounded-lg text-xs font-bold shrink-0 flex items-center gap-1.5 border transition-colors cursor-pointer ${
+                        className={`h-11 px-3.5 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1.5 border transition-colors cursor-pointer ${
                           statusFilter === 'favorites'
-                            ? 'bg-amber-500 text-white border-amber-500'
-                            : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-amber-950/40'
+                            ? 'bg-amber-500 text-white border-amber-500 shadow-sm shadow-amber-500/30'
+                            : 'bg-white dark:bg-[#101826] text-slate-700 dark:text-slate-200 border-slate-200/80 dark:border-white/10 hover:border-amber-400'
                         }`}
                         title="แสดงเฉพาะรายการสินค้าที่ปักหมุดไว้"
                       >
@@ -2853,10 +2849,10 @@ export default function App() {
                       <button
                         type="button"
                         onClick={handleToggleMultiSelectMode}
-                        className={`h-9 px-3 rounded-lg text-xs font-bold shrink-0 flex items-center gap-1.5 border transition-colors cursor-pointer ${
+                        className={`h-11 px-3.5 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1.5 border transition-colors cursor-pointer ${
                           isMultiSelectMode
-                            ? 'bg-blue-600 text-white border-blue-600'
-                            : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'
+                            ? 'bg-blue-600 text-white border-blue-600 shadow-sm shadow-blue-600/30'
+                            : 'bg-white dark:bg-[#101826] text-slate-700 dark:text-slate-200 border-slate-200/80 dark:border-white/10 hover:border-blue-400'
                         }`}
                         title="เลือกเบิกหลายรายการพร้อมกัน"
                       >
@@ -2873,7 +2869,7 @@ export default function App() {
                             }
                             setIsBatchUpdateModalOpen(true);
                           }}
-                          className="h-9 px-3 rounded-lg text-xs font-bold shrink-0 flex items-center gap-1.5 border bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-blue-500 transition-colors cursor-pointer"
+                          className="h-11 px-3.5 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1.5 border bg-white dark:bg-[#101826] text-slate-700 dark:text-slate-200 border-slate-200/80 dark:border-white/10 hover:border-blue-500 transition-colors cursor-pointer"
                           title="เปิดระบบแก้ไขข้อมูลสินค้าแบบกลุ่ม (Batch Update)"
                         >
                           <SlidersHorizontal className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
@@ -2887,11 +2883,7 @@ export default function App() {
                   <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-0.5 text-xs">
                     <button
                       onClick={() => setSelectedCategory('ทั้งหมด')}
-                      className={`px-3 py-1.5 rounded-lg shrink-0 transition-colors cursor-pointer font-bold border ${
-                        selectedCategory === 'ทั้งหมด'
-                          ? 'bg-slate-900 dark:bg-blue-600 text-white border-slate-900 dark:border-blue-600'
-                          : 'bg-slate-50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/80 hover:bg-slate-100 dark:hover:bg-slate-800'
-                      }`}
+                      className={`eng-chip shrink-0 ${selectedCategory === 'ทั้งหมด' ? 'eng-chip-active' : ''}`}
                     >
                       ทุกหมวดหมู่
                     </button>
@@ -2899,11 +2891,7 @@ export default function App() {
                       <button
                         key={cat}
                         onClick={() => setSelectedCategory(cat)}
-                        className={`px-3 py-1.5 rounded-lg shrink-0 transition-colors cursor-pointer font-semibold border ${
-                          selectedCategory === cat
-                            ? 'bg-slate-900 dark:bg-blue-600 text-white border-slate-900 dark:border-blue-600 font-bold'
-                            : 'bg-slate-50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/80 hover:bg-slate-100 dark:hover:bg-slate-800'
-                        }`}
+                        className={`eng-chip shrink-0 ${selectedCategory === cat ? 'eng-chip-active' : ''}`}
                       >
                         {cat}
                       </button>
@@ -2993,28 +2981,30 @@ export default function App() {
                 {loading ? (
                   <InventorySkeleton count={6} />
                 ) : error ? (
-                  <div className="bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/80 text-red-700 dark:text-red-300 p-4 rounded-xl text-sm space-y-2">
+                  <div className="bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/80 text-red-700 dark:text-red-300 p-5 rounded-2xl text-sm space-y-2">
                     <p className="font-bold">เกิดข้อผิดพลาดในการโหลดข้อมูล</p>
                     <p>{error}</p>
                     <button
                       onClick={() => fetchInventory(true)}
-                      className="px-3 py-1.5 bg-red-600 text-white rounded-lg font-semibold text-xs hover:bg-red-700 transition-colors cursor-pointer"
+                      className="h-11 px-4 bg-red-600 text-white rounded-xl font-semibold text-sm hover:bg-red-700 transition-colors cursor-pointer"
                     >
                       ลองใหม่อีกครั้ง
                     </button>
                   </div>
                 ) : filteredItems.length === 0 ? (
-                  <div className="text-center py-16 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-500">
-                    <Package className="w-8 h-8 mx-auto mb-2 opacity-40" />
-                    <p className="text-sm font-bold text-slate-700 dark:text-slate-300">ไม่พบรายการอะไหล่ที่ค้นหา</p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">ลองเปลี่ยนคำค้นหาหรือตัวกรองหมวดหมู่ด้านบน</p>
+                  <div className="text-center py-16 px-6 bg-white dark:bg-[#101826] rounded-3xl border border-dashed border-slate-300 dark:border-white/15 text-slate-400 dark:text-slate-500 shadow-sm">
+                    <div className="w-12 h-12 mx-auto mb-3 rounded-2xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                      <Package className="w-6 h-6" />
+                    </div>
+                    <p className="text-base font-bold text-slate-800 dark:text-slate-100">ไม่พบรายการอะไหล่ที่ค้นหา</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">ลองเปลี่ยนคำค้นหาหรือตัวกรองหมวดหมู่ด้านบน</p>
                     <button
                       onClick={() => {
                         setSearchQuery('');
                         setSelectedCategory('ทั้งหมด');
                         setStatusFilter('all');
                       }}
-                      className="mt-3 px-3.5 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition-colors cursor-pointer"
+                      className="mt-4 h-11 px-4 rounded-xl bg-blue-600 text-white text-sm font-bold hover:bg-blue-500 transition-colors cursor-pointer"
                     >
                       แสดงอะไหล่ทั้งหมด
                     </button>
@@ -3046,7 +3036,7 @@ export default function App() {
                       </div>
                     )}
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-2.5 sm:gap-3 w-full min-w-0 inventory-grid">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-3.5 w-full min-w-0 inventory-grid">
                       {filteredItems.map((item, index) => (
                         <ItemCard
                           key={item.id}

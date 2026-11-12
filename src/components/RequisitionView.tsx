@@ -100,11 +100,11 @@ export const RequisitionView: React.FC<RequisitionViewProps> = ({
   return (
     <div className="flex flex-col min-h-full transition-colors duration-200">
       {/* Subheader */}
-      <div className="bg-white/95 dark:bg-[#23201D]/95 backdrop-blur-md border-b border-[#EDE7DC] dark:border-[#38342F] px-4 sm:px-6 py-3.5 shrink-0 shadow-xs transition-colors duration-200">
+      <div className="eng-header px-4 sm:px-6 py-4 shrink-0">
         <div className="max-w-7xl mx-auto w-full">
         <div className="flex items-center justify-between gap-2 flex-wrap">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/25 border border-blue-400/30">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-sky-400 flex items-center justify-center text-white shadow-md shadow-blue-500/25">
               <ClipboardList className="w-5 h-5" />
             </div>
             <div>

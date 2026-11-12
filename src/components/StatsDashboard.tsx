@@ -358,7 +358,7 @@ export const StatsDashboard: React.FC<StatsDashboardProps> = ({
       ) : (
         <>
           {/* Top Header Card */}
-          <div className="liquid-glass-card rounded-[32px] p-5 sm:p-6 shadow-xl relative overflow-hidden border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 w-full min-w-0">
+          <div className="liquid-glass-card rounded-[24px] p-5 sm:p-6 relative overflow-hidden w-full min-w-0">
             {/* Specular top highlight */}
             <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-white/80 dark:via-white/25 to-transparent pointer-events-none rounded-full" />
 

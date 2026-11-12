@@ -1081,12 +1081,12 @@ export const VoiceAssistantView: React.FC<VoiceAssistantViewProps> = ({
   }, [setChatHistory, isLiveConnected, sendMessage]);
 
   return (
-    <div className="flex flex-col h-full max-h-full overflow-hidden bg-[#F8FAFC] dark:bg-slate-950 transition-colors duration-200">
+    <div className="flex flex-col h-full max-h-full overflow-hidden bg-transparent transition-colors duration-200">
       {/* Top Bar */}
-      <div className="bg-white dark:bg-slate-900 px-3.5 py-2 border-b border-slate-300 dark:border-slate-750 shrink-0 shadow-2xs transition-colors duration-200 z-10">
+      <div className="eng-header px-3.5 py-2.5 shrink-0 z-10">
         <div className="max-w-4xl mx-auto w-full flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-xs shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-600 to-sky-400 flex items-center justify-center text-white shadow-sm shrink-0 ring-2 ring-orange-400/70">
               <Sparkles className="w-3 h-3" />
             </div>
             <div>
@@ -1138,7 +1138,7 @@ export const VoiceAssistantView: React.FC<VoiceAssistantViewProps> = ({
                 <button
                   key={idx}
                   onClick={() => sendQuery(prompt.replace(/^[^\s]+\s/, ''))}
-                  className="w-full text-left bg-white dark:bg-slate-900 hover:bg-blue-50/60 dark:hover:bg-slate-800/80 border border-slate-200/80 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700/60 rounded-xl p-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-medium transition-all shadow-xs flex items-center justify-between group active:scale-[0.99] cursor-pointer"
+                  className="w-full text-left bg-white dark:bg-[#101826] hover:bg-blue-50/70 dark:hover:bg-white/5 border border-slate-200/80 dark:border-white/10 hover:border-blue-400 rounded-2xl p-3 text-sm text-slate-700 dark:text-slate-200 font-medium transition-all shadow-sm flex items-center justify-between group active:scale-[0.99] cursor-pointer min-h-11"
                 >
                   <span className="truncate pr-2">{prompt}</span>
                   <ArrowRight className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-blue-600 dark:group-hover:text-blue-400 shrink-0 transition-colors" />
@@ -1888,7 +1888,7 @@ export const VoiceAssistantView: React.FC<VoiceAssistantViewProps> = ({
         style={{
           paddingBottom: 'max(108px, calc(env(safe-area-inset-bottom, 24px) + 90px))'
         }}
-        className="px-3 pt-2 pb-1 bg-white dark:bg-slate-900 border-t border-slate-300 dark:border-slate-750 shrink-0 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_-4px_20px_rgba(0,0,0,0.4)] transition-colors duration-200 z-20"
+        className="px-3 pt-2 pb-1 bg-white/95 dark:bg-[#0c1220]/95 backdrop-blur-xl border-t border-slate-200/80 dark:border-white/10 shrink-0 shadow-[0_-12px_32px_rgba(15,23,42,0.08)] dark:shadow-[0_-12px_32px_rgba(0,0,0,0.45)] z-20"
       >
         <div className="max-w-4xl mx-auto w-full">
         {/* Live Chat Button & Voice Reactive Controls */}

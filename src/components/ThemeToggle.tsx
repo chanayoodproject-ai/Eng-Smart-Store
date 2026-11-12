@@ -17,10 +17,10 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
     <button
       type="button"
       onClick={toggleTheme}
-      className={`relative inline-flex items-center justify-center h-9 px-2.5 rounded-lg border transition-colors active:scale-95 cursor-pointer ${
+      className={`eng-icon-btn ${
         isDark
-          ? 'bg-slate-800 border-slate-700 text-amber-400 hover:bg-slate-700 hover:border-amber-400/60'
-          : 'bg-slate-100 border-slate-200 text-slate-700 hover:text-blue-600 hover:bg-slate-200/70 hover:border-slate-300'
+          ? '!bg-amber-400/15 !text-amber-300 !border-amber-300/40'
+          : '!bg-indigo-50 !text-indigo-700 !border-indigo-200'
       } ${className}`}
       title={isDark ? 'สลับเป็นโทนสว่าง (Light Mode)' : 'สลับเป็นโทนมืด (Dark Mode)'}
       aria-label="สลับธีม สว่าง/มืด"

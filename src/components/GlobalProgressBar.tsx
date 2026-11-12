@@ -68,7 +68,7 @@ export const GlobalProgressBar: React.FC<GlobalProgressBarProps> = ({
   return (
     <div className="fixed top-0 left-0 right-0 z-[999] h-[3px] pointer-events-none overflow-hidden bg-transparent">
       <motion.div
-        className="h-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.8)]"
+        className="eng-progress h-full"
         initial={{ width: '0%', opacity: 1 }}
         animate={{
           width: `${progress}%`,

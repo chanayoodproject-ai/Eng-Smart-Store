@@ -57,7 +57,7 @@ export const TopNavTabs: React.FC<TopNavTabsProps> = ({
   return (
     <nav 
       aria-label="Navigation Tabs"
-      className={`items-center gap-1 p-1 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-800/80 ${className}`}
+      className={`items-center gap-1 p-1 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-md shadow-sm ${className}`}
     >
       {tabs.map((tab) => {
         const Icon = tab.icon;
@@ -68,10 +68,10 @@ export const TopNavTabs: React.FC<TopNavTabsProps> = ({
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer select-none relative shrink-0 active:scale-95 ${
+            className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer select-none relative shrink-0 active:scale-95 min-h-9 ${
               isActive
-                ? 'bg-blue-600 text-white shadow-2xs'
-                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-700/70'
+                ? 'bg-slate-950 text-white shadow-md dark:bg-gradient-to-r dark:from-blue-600 dark:to-sky-500'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-white dark:hover:bg-white/10'
             }`}
           >
             <Icon className={`w-3.5 h-3.5 ${isActive ? 'stroke-[2.5]' : 'stroke-[2]'}`} />

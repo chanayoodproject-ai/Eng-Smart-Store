@@ -183,14 +183,20 @@ export const ItemCard: React.FC<ItemCardProps> = React.memo(({
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerCancel}
       onContextMenu={handleContextMenu}
-      className={`item-card-container w-full min-w-0 max-w-full box-border rounded-xl p-3 sm:p-3.5 transition-all duration-150 cursor-pointer relative group flex flex-col justify-between overflow-hidden select-none touch-manipulation border bg-white dark:bg-slate-900 shadow-2xs hover:shadow-md ${
+      className={`item-card-container w-full min-w-0 max-w-full box-border rounded-2xl p-3.5 sm:p-4 transition-all duration-150 cursor-pointer relative group flex flex-col justify-between overflow-hidden select-none touch-manipulation border bg-white dark:bg-[#101826] shadow-[0_1px_2px_rgba(15,23,42,0.04),0_16px_32px_-22px_rgba(15,23,42,0.55)] hover:shadow-[0_12px_28px_-16px_rgba(37,99,235,0.35)] ${
         isSelected
-          ? 'bg-blue-50/70 dark:bg-blue-950/40 border-blue-600 dark:border-blue-400 ring-2 ring-blue-500/30'
+          ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-600 dark:border-blue-400 ring-2 ring-blue-500/30'
           : isRecentlyUpdated
             ? `${statusConfig.borderClass} ring-2 ring-emerald-500/30`
             : statusConfig.borderClass
       }`}
     >
+      <span
+        aria-hidden
+        className={`absolute left-0 top-0 bottom-0 w-1 ${
+          isSelected ? 'bg-blue-600' : isOut ? 'bg-red-500' : isLow ? 'bg-amber-500' : 'bg-emerald-500'
+        }`}
+      />
       {/* Top Section: Code + Favorite + Status Indicator */}
       <div>
         <div className="flex items-center justify-between gap-2 mb-1.5">
@@ -203,7 +209,7 @@ export const ItemCard: React.FC<ItemCardProps> = React.memo(({
                   e.stopPropagation();
                   if (onToggleSelect) onToggleSelect(item);
                 }}
-                className={`w-5 h-5 rounded-md flex items-center justify-center transition-colors cursor-pointer shrink-0 ${
+                className={`w-6 h-6 rounded-md flex items-center justify-center transition-colors cursor-pointer shrink-0 ${
                   isSelected
                     ? 'bg-blue-600 text-white border border-blue-600'
                     : 'bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-transparent hover:border-blue-500'
@@ -213,7 +219,7 @@ export const ItemCard: React.FC<ItemCardProps> = React.memo(({
               </button>
             )}
 
-            <span className="font-mono text-xs font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200/80 dark:border-slate-700/80 tabular-nums tracking-tight">
+            <span className="font-mono text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded-md border border-slate-200/80 dark:border-white/10 tabular-nums tracking-tight">
               {item.id}
             </span>
 
@@ -237,7 +243,7 @@ export const ItemCard: React.FC<ItemCardProps> = React.memo(({
                   e.stopPropagation();
                   onToggleFavorite(item);
                 }}
-                className={`p-1 rounded-md transition-colors cursor-pointer flex items-center justify-center ${
+                className={`w-9 h-9 rounded-xl transition-colors cursor-pointer flex items-center justify-center ${
                   isFavorite
                     ? 'text-amber-500 bg-amber-50 dark:bg-amber-950/50'
                     : 'text-slate-400 hover:text-amber-500 dark:text-slate-500 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800'
@@ -251,7 +257,7 @@ export const ItemCard: React.FC<ItemCardProps> = React.memo(({
         </div>
 
         {/* Item Name */}
-        <h3 className="font-bold text-slate-900 dark:text-slate-100 text-[15px] sm:text-base leading-snug line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+        <h3 className="font-bold text-slate-950 dark:text-slate-50 text-[15px] sm:text-base leading-snug line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
           {item.name}
         </h3>
 
@@ -287,7 +293,7 @@ export const ItemCard: React.FC<ItemCardProps> = React.memo(({
         {/* Left: High-Contrast Stock Counter */}
         <div className="flex items-baseline gap-1.5 min-w-0">
           <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">คงเหลือ</span>
-          <span className={`font-mono font-black text-xl sm:text-2xl tabular-nums tracking-tight leading-none ${statusConfig.qtyColor}`}>
+          <span className={`font-mono font-black text-2xl sm:text-[1.7rem] tabular-nums tracking-tight leading-none ${statusConfig.qtyColor}`}>
             {item.qty.toLocaleString()}
           </span>
           <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 truncate">
@@ -304,7 +310,7 @@ export const ItemCard: React.FC<ItemCardProps> = React.memo(({
                 e.stopPropagation();
                 onOrderClick(item);
               }}
-              className={`h-8 px-2.5 rounded-lg font-bold text-xs inline-flex items-center gap-1 transition-all active:scale-95 cursor-pointer border ${
+              className={`h-10 px-3 rounded-xl font-bold text-xs inline-flex items-center gap-1 transition-all active:scale-95 cursor-pointer border ${
                 isOut
                   ? 'bg-red-600 hover:bg-red-700 text-white border-red-600 shadow-2xs'
                   : 'bg-orange-50 dark:bg-orange-950/60 hover:bg-orange-100 dark:hover:bg-orange-900/70 text-orange-700 dark:text-orange-300 border-orange-300 dark:border-orange-800'
@@ -326,7 +332,7 @@ export const ItemCard: React.FC<ItemCardProps> = React.memo(({
                   onQuickRequisition(item);
                 }
               }}
-              className={`h-8 px-3 rounded-lg font-bold text-xs inline-flex items-center gap-1 transition-all cursor-pointer ${
+              className={`h-10 px-3.5 rounded-xl font-bold text-xs inline-flex items-center gap-1 transition-all cursor-pointer ${
                 isOut
                   ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-600 border border-slate-200 dark:border-slate-700 cursor-not-allowed'
                   : 'bg-blue-600 hover:bg-blue-700 active:scale-95 text-white border border-blue-600 shadow-2xs'
