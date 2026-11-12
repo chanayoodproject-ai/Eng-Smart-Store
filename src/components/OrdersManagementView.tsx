@@ -433,7 +433,7 @@ export const OrdersManagementView: React.FC<OrdersManagementViewProps> = ({
   return (
     <div className="space-y-5 p-3.5 sm:p-5 md:p-6 pb-28 sm:pb-32 max-w-7xl mx-auto w-full min-w-0 overflow-x-hidden">
       {/* Top Banner & Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-600/10 p-4 sm:p-5 rounded-3xl border-2 border-amber-300 dark:border-amber-700/60 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 bg-gradient-to-r from-orange-500/12 via-amber-400/10 to-sky-500/10 p-4 sm:p-5 rounded-[24px] border border-orange-300/80 dark:border-orange-500/40 shadow-sm">
         <div className="flex items-center gap-3.5">
           <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-lg shadow-amber-500/30 shrink-0">
             <ShoppingCart className="w-6 h-6" />

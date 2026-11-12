@@ -1,0 +1,47 @@
+# ENG Smart Store — Netlify static frontend
+#
+# Build command:  npm run build
+# Publish directory: dist
+# Node: 22
+#
+# This publishes the Vite SPA. Inventory, login, and most screens talk to
+# Firebase from the browser, so they work on this static host.
+#
+# Routes under /api/* (AI chat, invoice scan, LINE, web push, order confirm)
+# are implemented by the Express server (npm start / server.ts), not by this
+# static build. To attach that API, add a rewrite ABOVE the SPA fallback:
+#
+#   [[redirects]]
+#     from = "/api/*"
+#     to = "https://YOUR_API_HOST/api/:splat"
+#     status = 200
+#     force = true
+#
+# Do not commit API keys. Set them on the API host, not in this file.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Hashed Vite assets can be cached forever.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Existing files (index.html, /assets/*, /sw.js, icons) are served first.
+# Everything else falls back to the SPA shell.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

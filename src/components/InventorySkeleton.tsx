@@ -14,7 +14,7 @@ export const InventorySkeleton: React.FC<InventorySkeletonProps> = ({ count = 8 
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.18, delay: idx * 0.03 }}
-          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-3.5 shadow-2xs relative overflow-hidden"
+          className="bg-white dark:bg-[#101826] border border-slate-200/80 dark:border-white/10 rounded-2xl p-3.5 sm:p-4 shadow-sm relative overflow-hidden"
         >
           <div className="space-y-2">
             {/* Top row */}

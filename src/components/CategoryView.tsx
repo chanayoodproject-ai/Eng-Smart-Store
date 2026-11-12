@@ -73,7 +73,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
   return (
     <div className="p-3 sm:p-4 md:p-5 space-y-3.5 pb-28 sm:pb-32 max-w-7xl mx-auto w-full min-w-0 overflow-x-hidden transition-colors duration-200">
       {/* Header */}
-      <div className="flex items-center justify-between bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800">
+      <div className="flex items-center justify-between bg-white dark:bg-[#101826] p-4 rounded-2xl border border-slate-200/80 dark:border-white/10 shadow-sm">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0">
             <Boxes className="w-4.5 h-4.5" />
@@ -97,7 +97,7 @@ export const CategoryView: React.FC<CategoryViewProps> = ({
           const outOfStockItemsInCat = stats.outCount;
           const lowStockItemsInCat = stats.lowCount;
 
-          const cardClassName = "rounded-xl overflow-hidden shadow-2xs hover:shadow-md hover:border-blue-500 dark:hover:border-blue-500 transition-all cursor-pointer group flex flex-col justify-between border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 relative w-full min-w-0 box-border";
+          const cardClassName = "rounded-2xl overflow-hidden shadow-[0_1px_2px_rgba(15,23,42,0.04),0_16px_32px_-22px_rgba(15,23,42,0.5)] hover:shadow-[0_16px_32px_-16px_rgba(37,99,235,0.4)] hover:border-blue-500 dark:hover:border-blue-400 transition-all cursor-pointer group flex flex-col justify-between border border-slate-200/80 dark:border-white/10 bg-white dark:bg-[#101826] relative w-full min-w-0 box-border";
 
           const cardContent = (
             <>

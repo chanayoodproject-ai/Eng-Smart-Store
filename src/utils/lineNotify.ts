@@ -92,6 +92,11 @@ export const notifyStockTransaction = async (data: LineStockNotifyData): Promise
       body: JSON.stringify(payload),
     });
 
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      return { success: false, message: 'บริการแจ้งเตือน LINE ไม่พร้อมบนโฮสต์นี้' };
+    }
+
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       return { success: false, message: err.error || 'Failed to send LINE notification' };
@@ -127,6 +132,11 @@ export const notifyBulkStockTransaction = async (data: LineBulkStockNotifyData):
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
+
+    const bulkType = res.headers.get('content-type') || '';
+    if (!bulkType.includes('application/json')) {
+      return { success: false, message: 'บริการแจ้งเตือน LINE ไม่พร้อมบนโฮสต์นี้' };
+    }
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
@@ -164,6 +174,11 @@ export const notifyAuthEvent = async (data: LineAuthNotifyData): Promise<{ succe
       body: JSON.stringify(payload),
     });
 
+    const authType = res.headers.get('content-type') || '';
+    if (!authType.includes('application/json')) {
+      return { success: false, message: 'บริการแจ้งเตือน LINE ไม่พร้อมบนโฮสต์นี้' };
+    }
+
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       return { success: false, message: err.error || 'Failed to send LINE notification' };
@@ -192,6 +207,10 @@ export const testLineNotification = async (testConfig?: {
       body: JSON.stringify(testConfig || {}),
     });
 
+    const testType = res.headers.get('content-type') || '';
+    if (!testType.includes('application/json')) {
+      return { success: false, error: 'บริการแจ้งเตือน LINE ไม่พร้อมบนโฮสต์นี้' };
+    }
     const data = await res.json();
     if (!res.ok || !data.success) {
       return { success: false, error: data.error || 'การส่งข้อความทดสอบไม่สำเร็จ กรุณาตรวจสอบ Token และ ID' };
@@ -221,6 +240,11 @@ export const notifyPurchaseOrder = async (order: PurchaseOrder, baseUrl?: string
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
+
+    const orderType = res.headers.get('content-type') || '';
+    if (!orderType.includes('application/json')) {
+      return { success: false, message: 'บริการแจ้งเตือน LINE ไม่พร้อมบนโฮสต์นี้' };
+    }
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
